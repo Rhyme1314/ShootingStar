@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 606251091}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Muzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,9 +39,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 214778051926960353}
+  - component: {fileID: 1272407361773058320}
+  - component: {fileID: 5503810657500045926}
   - component: {fileID: 811967925}
   - component: {fileID: 784717026584884785}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Enemy01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -65,6 +67,43 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &1272407361773058320
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214778051926960383}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.25, y: -0.05}
+  m_Size: {x: 1.5, y: 0.33}
+  m_Direction: 1
+--- !u!50 &5503810657500045926
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214778051926960383}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
 --- !u!114 &811967925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,7 +150,7 @@ GameObject:
   - component: {fileID: 2098932907513412709}
   - component: {fileID: 2301111173718528101}
   - component: {fileID: 2300751841641305505}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Engine Flame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4781,7 +4820,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2099003637960572045}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Enemy Engine VFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4816,7 +4855,7 @@ GameObject:
   - component: {fileID: 2107683879361592513}
   - component: {fileID: 2301259860146630613}
   - component: {fileID: 2299151799125504963}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Engine Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9690,7 +9729,7 @@ GameObject:
   - component: {fileID: 6261304001329363102}
   - component: {fileID: 7361182599366002482}
   - component: {fileID: 7481720887092731509}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Engine Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14564,7 +14603,7 @@ GameObject:
   - component: {fileID: 6712755650908408713}
   - component: {fileID: 6723258621307303131}
   - component: {fileID: 6731687327678342699}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}

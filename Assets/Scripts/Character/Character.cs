@@ -5,19 +5,41 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-	[SerializeField]GameObject deathVFX;
+	[SerializeField] GameObject deathVFX;
 	[Header("-----HEALTH------")]
-	[SerializeField]protected float maxHealth;
-	protected float health;
+	[SerializeField] protected float maxHealth;
+	[SerializeField] protected float health;
+	[SerializeField] protected bool showHeadHealthBar = true;
+	[SerializeField] protected StatsBar onHeadHealthBar;
 	protected virtual void OnEnable()
 	{
+		if (showHeadHealthBar)
+			ShowOnHeadHealthBar(); 
+		else
+			HideOnHeadHealthBar();
 		health = maxHealth;
+		onHeadHealthBar.Initialize(health, maxHealth);
 	}
+	public void ShowOnHeadHealthBar()
+	{
+		onHeadHealthBar.gameObject.SetActive(true);
+		onHeadHealthBar.Initialize(health, maxHealth);
+	}
+	public void HideOnHeadHealthBar()
+	{
+		onHeadHealthBar.gameObject.SetActive(false);
+	}
+
 
 	public virtual void TakeDamage(float damage)
 	{
+		
 		health -= damage;
-		if (health<=0f)
+		if (showHeadHealthBar)
+		{
+			onHeadHealthBar.UpdateStatus(health,maxHealth);
+		}
+		if (health <= 0f)
 		{
 			Die();
 		}
@@ -35,6 +57,10 @@ public class Character : MonoBehaviour
 		if (health == maxHealth)
 			return;
 		health = Mathf.Clamp(health + value, 0f, maxHealth);
+		if (showHeadHealthBar)
+		{
+			onHeadHealthBar.UpdateStatus(health, maxHealth);
+		}
 	}
 	/// <summary>
 	/// 自动回血协程
@@ -42,9 +68,9 @@ public class Character : MonoBehaviour
 	/// <param name="waitTime">回血间隔</param>
 	/// <param name="percent">每次恢复的最大生命值百分比</param>
 	/// <returns></returns>
-	 protected IEnumerator HealthRegenerateCoroutine(WaitForSeconds waitTime,float percent)
+	protected IEnumerator HealthRegenerateCoroutine(WaitForSeconds waitTime, float percent)
 	{
-		while (health<=maxHealth)
+		while (health <= maxHealth)
 		{
 			yield return waitTime;
 			RestoreHealth(maxHealth * percent);
@@ -53,7 +79,7 @@ public class Character : MonoBehaviour
 	//持续受伤协程
 	protected IEnumerator DamagerOverTimeCoroutine(WaitForSeconds waitTime, float damage)
 	{
-		while (health >0f)
+		while (health > 0f)
 		{
 			yield return waitTime;
 			TakeDamage(damage);

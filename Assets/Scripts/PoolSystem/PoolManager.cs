@@ -6,12 +6,14 @@ public class PoolManager : MonoBehaviour
 {
 	[SerializeField] private Pool[] playerProjectilePools;
 	[SerializeField] private Pool[] enemyProjectilePools;
+	[SerializeField] private Pool[] vFXPools;
 	private static Dictionary<GameObject, Pool> dictionary;
 	private void Start()
 	{
 		dictionary = new Dictionary<GameObject, Pool>();
 		Initialize(playerProjectilePools);
 		Initialize(enemyProjectilePools);
+		Initialize(vFXPools);
 	}
 	void Initialize(Pool[] pools)
 	{
@@ -35,6 +37,7 @@ public class PoolManager : MonoBehaviour
 	{
 		CheckPoolSize(playerProjectilePools);
 		CheckPoolSize(enemyProjectilePools);
+		CheckPoolSize(vFXPools);
 	}
 #endif
 	//用来检测对象池尺寸

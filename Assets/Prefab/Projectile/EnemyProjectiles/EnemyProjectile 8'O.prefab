@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7316592517750831143}
   - component: {fileID: 3684195686352809393}
   - component: {fileID: 3109382979117988507}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,8 @@ GameObject:
   - component: {fileID: 6264183529345964853}
   - component: {fileID: 1342598318546736062}
   - component: {fileID: -5195653777371615586}
-  m_Layer: 0
+  - component: {fileID: 5352860757657229867}
+  m_Layer: 8
   m_Name: EnemyProjectile 8'O
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,6 +127,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91fbd7ab83fc1cf4d92d99d2e55f8c04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitVFX: {fileID: 4801493125213720806, guid: 94d3dff6247d98e4cb4d8d6f0be5e291, type: 3}
+  damage: 2
   moveSpeed: 6
   moveDirection: {x: -1, y: -0.1667}
 --- !u!114 &-5195653777371615586
@@ -142,3 +145,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifetime: 3
   destoryGameObejct: 0
+--- !u!70 &5352860757657229867
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6264183529345964852}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.0029, y: 0.0009}
+  m_Size: {x: 0.24, y: 0.11}
+  m_Direction: 1

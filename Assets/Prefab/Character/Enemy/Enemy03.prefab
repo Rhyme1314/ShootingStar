@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 47937763}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Muzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,11 +39,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 578449712315536098}
+  - component: {fileID: 5062460211515426015}
+  - component: {fileID: 5504386656261390429}
   - component: {fileID: 808425431}
   - component: {fileID: 2122403833}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Enemy03
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -65,6 +67,43 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &5062460211515426015
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 578449712315536124}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.01, y: -0.01}
+  m_Size: {x: 1.5, y: 0.29}
+  m_Direction: 1
+--- !u!50 &5504386656261390429
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 578449712315536124}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
 --- !u!114 &808425431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,7 +150,7 @@ GameObject:
   - component: {fileID: 6137544642050372498}
   - component: {fileID: 6340145378222809222}
   - component: {fileID: 6339719612811902096}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Engine Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4985,7 +5024,7 @@ GameObject:
   - component: {fileID: 6139505103136060214}
   - component: {fileID: 6340012110743166774}
   - component: {fileID: 6340758879247440626}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Engine Flame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9655,7 +9694,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6139012909936538590}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Enemy Engine VFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9690,7 +9729,7 @@ GameObject:
   - component: {fileID: 6350493729430480803}
   - component: {fileID: 6365510965873138987}
   - component: {fileID: 6376492814830475651}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: StarSparrow13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9771,7 +9810,7 @@ GameObject:
   - component: {fileID: 2231412495327590349}
   - component: {fileID: 3331295474900977761}
   - component: {fileID: 3442833169909403942}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Engine Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
