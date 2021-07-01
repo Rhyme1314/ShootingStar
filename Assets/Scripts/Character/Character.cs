@@ -35,7 +35,7 @@ public class Character : MonoBehaviour
 	{
 		
 		health -= damage;
-		if (showHeadHealthBar)
+		if (showHeadHealthBar&&gameObject.activeSelf)
 		{
 			onHeadHealthBar.UpdateStatus(health,maxHealth);
 		}

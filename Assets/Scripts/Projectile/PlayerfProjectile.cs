@@ -17,4 +17,9 @@ public class PlayerfProjectile : Projectile
 	{
 		trail.Clear();
 	}
+	protected override void OnCollisionEnter2D(Collision2D other)
+	{
+		base.OnCollisionEnter2D(other);
+		PlayerEnergy.instance.Obatin(PlayerEnergy.PERCENT);
+	}
 }

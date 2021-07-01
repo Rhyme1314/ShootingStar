@@ -10,8 +10,8 @@ public class StatsBar : MonoBehaviour
 	[SerializeField] private float fillSpeed = 0.1f;
 	[SerializeField] private bool delayFill = true;
 	[SerializeField] private float delayTime = 0.1f;
-	private float currentFillAmout;//当前血条百分比 0~1
-	private float targetFillAmout;//目标血条百分比  0~1
+	protected  private float currentFillAmout;//当前血条百分比 0~1
+	protected private float targetFillAmout;//目标血条百分比  0~1
 
 	WaitForSeconds waitForDelayFill;
 	Coroutine bufferedFillCoroutine;
@@ -25,7 +25,7 @@ public class StatsBar : MonoBehaviour
 		waitForDelayFill = new WaitForSeconds(delayTime);
 	}
 
-	public void Initialize(float currentValue,float maxValue)
+	public virtual void Initialize(float currentValue,float maxValue)
 	{
 		currentFillAmout = currentValue / maxValue;
 		targetFillAmout = currentFillAmout;
@@ -33,7 +33,7 @@ public class StatsBar : MonoBehaviour
 		fillImageFront.fillAmount = targetFillAmout;
 	}
 	//更新血条长度 
-	public void UpdateStatus(float currentValue, float maxValue)
+	public virtual  void UpdateStatus(float currentValue, float maxValue)
 	{
 		if (bufferedFillCoroutine!=null)
 			StopCoroutine(bufferedFillCoroutine);
@@ -43,12 +43,16 @@ public class StatsBar : MonoBehaviour
 			fillImageFront.fillAmount = targetFillAmout;
 			bufferedFillCoroutine=StartCoroutine(BufferedFillingCoroutine(fillImageBack));
 		}
-		if (currentFillAmout<targetFillAmout)//状态增加时
+		else if (currentFillAmout<targetFillAmout)//状态增加时
 		{
 			fillImageBack.fillAmount = targetFillAmout;
 			bufferedFillCoroutine=StartCoroutine(BufferedFillingCoroutine(fillImageFront));
 		}
 		
+	}
+	private void OnDisable()
+	{
+		StopAllCoroutines();
 	}
 	//掉血/加血的血条缓冲效果
 	IEnumerator BufferedFillingCoroutine(Image image)
@@ -56,16 +60,19 @@ public class StatsBar : MonoBehaviour
 		if (delayFill)
 		{
 			yield return waitForDelayFill;
+			t = 0f;
+			while (t < 1f)
+			{
+				t += Time.deltaTime * fillSpeed;
+				currentFillAmout = Mathf.Lerp(currentFillAmout, targetFillAmout, t);
+				image.fillAmount = currentFillAmout;
+				yield return null;
+			}
 		}
-		t = 0f;
-		while (t<1f)
+		else
 		{
-			t += Time.deltaTime * fillSpeed;
-			currentFillAmout = Mathf.Lerp(currentFillAmout, targetFillAmout, t);
+			currentFillAmout = targetFillAmout;
 			image.fillAmount = currentFillAmout;
-
-			yield return null;
 		}
-		
 	}
 }

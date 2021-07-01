@@ -10,6 +10,7 @@ public class PlayerController : Character
 	[SerializeField] private bool healthRegenerate = true;
 	[SerializeField] private float healthRegenerateInterval;
 	[SerializeField, Range(0f, 1f)] protected float healthRegeneratePercent;//血量恢复百分比
+	[SerializeField] StatsBar_HUD healthHUD;
 	[Header("-----INPUT-----")]
 	[SerializeField] PlayerInput input;
 	[Header("-----MOVE-----")]
@@ -28,24 +29,38 @@ public class PlayerController : Character
 	[SerializeField] private Transform muzzleBot;//枪口 下
 	[SerializeField,Range(0,2)] private int weaponPower = 0;//武器威力
 	[SerializeField] private float fireInterval = 0.2f;
+	[Header("-----DODGE-----")]
+	[SerializeField,Range(0,100)] private int dodgeEnergyCost = 20;
+	[SerializeField]private float maxRoll = 720f;//翻转角度--两圈
+	[SerializeField] private float rollSpeed = 360f;//翻转速度 --一秒一圈
+	private float currentRoll;                      //当前翻转角度
+	private Vector3 dodgeScale = new Vector3(0.5f, 0.5f, 0.5f);
+
+	private float dodgeDuration;
+	private bool isDodge = false;
 	//-------------------OTHERS-----------------------
 	private Coroutine moveCoroutine;
 	private Coroutine healthRegenerateCoroutine;
 	new Rigidbody2D rigidbody;
+	new Collider2D collider;
 	private WaitForSeconds waitTime;
 
 
 	private void Awake()
 	{
 		rigidbody = GetComponent<Rigidbody2D>();
+		collider = GetComponent<Collider2D>();
 	}
 
 	private void Start()
 	{
 		rigidbody.gravityScale = 0;
+		dodgeDuration = maxRoll / rollSpeed;//翻转持续时间
+
 		waitTime = new WaitForSeconds(healthRegenerateInterval);
-		
+		healthHUD.Initialize(health, maxHealth);
 		input.EnableGameplayInput();
+		PlayerEnergy.instance.Obatin(PlayerEnergy.MAX);
 	}
 
 	override protected void OnEnable()
@@ -55,9 +70,8 @@ public class PlayerController : Character
 		input.onStopMove += StopMove;
 		input.onFire += Fire;
 		input.onStopFire += StopFire;
+		input.onDodge += Dodge;
 	}
-
-
 
 	private void OnDisable()
 	{
@@ -65,10 +79,12 @@ public class PlayerController : Character
 		input.onStopMove -= StopMove;
 		input.onFire -= Fire;
 		input.onStopFire -= StopFire;
+		input.onDodge -= Dodge;
 	}
 	public override void TakeDamage(float damage)
 	{
 		base.TakeDamage(damage);
+		healthHUD.UpdateStatus(health, maxHealth);//更新HUD血条状态
 		if (gameObject.activeSelf)
 		{
 			if (healthRegenerate)
@@ -81,7 +97,57 @@ public class PlayerController : Character
 			}
 		}
 	}
+	public override void Die()
+	{
+		healthHUD.UpdateStatus(0f, maxHealth);//更新HUD血条状态
+		base.Die();
+	}
+	public override void RestoreHealth(float value)
+	{
+		healthHUD.UpdateStatus(health, maxHealth);//更新HUD血条状态
+		base.RestoreHealth(value);
+	}
+	#region 闪避
+	private void Dodge()
+	{
+		if (isDodge || !PlayerEnergy.instance.IsEnough(dodgeEnergyCost))//能量不足或正在翻转
+			return;
+		StartCoroutine(nameof(DodgeCoroutine));
 
+
+	}
+	IEnumerator DodgeCoroutine()
+	{
+		//角色无敌
+		collider.isTrigger = true;
+		isDodge = true;
+		PlayerEnergy.instance.Use(dodgeEnergyCost);//消耗能量
+		currentRoll = 0f;//重置翻转
+		//Vector3 scale = transform.localScale;
+		var t1 = 0f; var t2=0f;
+		while (currentRoll< maxRoll)    //角色翻转
+		{
+			currentRoll += rollSpeed * Time.deltaTime;
+			transform.rotation = Quaternion.AngleAxis(currentRoll, Vector3.right);
+			//角色缩放
+			if (currentRoll < maxRoll / 2f)
+			{
+				t1 += Time.deltaTime;
+				transform.localScale = Vector3.Lerp(Vector3.one, dodgeScale, 2f*t1);//匀速缩放
+			}
+			else
+			{
+				t2 += Time.deltaTime;
+				transform.localScale = Vector3.Lerp(dodgeScale, Vector3.one,2f* t2);
+			}
+			yield return null;
+		}
+		//翻转结束
+	
+		isDodge = false;
+		collider.isTrigger = false;
+	}
+	#endregion
 	#region 移动
 	private void StopMove()
 	{
@@ -107,6 +173,7 @@ public class PlayerController : Character
 		{
 			t += Time.fixedDeltaTime / time;
 			rigidbody.velocity = Vector2.Lerp(rigidbody.velocity, moveVelocity, t );
+			if (!isDodge)
 			transform.rotation = Quaternion.Lerp(transform.rotation, moveRotation, t);
 			yield return null;
 		}

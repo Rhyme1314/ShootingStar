@@ -20,7 +20,7 @@ public class Projectile : MonoBehaviour
 			yield return null;
 		}
 	}
-	private void OnCollisionEnter2D(Collision2D other)
+	virtual protected  void OnCollisionEnter2D(Collision2D other)
 	{
 		if (other.gameObject.TryGetComponent<Character>(out Character character))
 		{//·¢ÉúÅö×²
