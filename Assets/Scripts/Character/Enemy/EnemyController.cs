@@ -46,7 +46,6 @@ public class EnemyController : MonoBehaviour
 			}
 			yield return null;
 		}
-
 	}
 
 	IEnumerator RandomlyFireCoroutine()

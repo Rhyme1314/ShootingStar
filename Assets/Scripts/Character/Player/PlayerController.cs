@@ -154,7 +154,7 @@ public class PlayerController : Character
 		if (moveCoroutine != null)
 			StopCoroutine(moveCoroutine);
 		moveCoroutine = StartCoroutine(MoveCoroutine(declerationTime, Vector2.zero, Quaternion.identity));
-		StopCoroutine(PlayerMoveLimitCoroutine());
+		StopCoroutine(nameof(PlayerMoveLimitCoroutine));
 	}
 
 	private void Move(Vector2 moveInput)
@@ -163,7 +163,7 @@ public class PlayerController : Character
 			StopCoroutine(moveCoroutine);
 		Quaternion moveRotation = Quaternion.AngleAxis(moveInput.y * moveRotationAngle, Vector3.right);
 		moveCoroutine = StartCoroutine(MoveCoroutine(acclerationTime, moveInput.normalized * moveSpeed, moveRotation));
-		StartCoroutine(PlayerMoveLimitCoroutine());
+		StartCoroutine(nameof(PlayerMoveLimitCoroutine));
 	}
 	//移动加速协程
 	IEnumerator MoveCoroutine(float time, Vector2 moveVelocity, Quaternion moveRotation)

@@ -7,13 +7,15 @@ public class PoolManager : MonoBehaviour
 	[SerializeField] private Pool[] playerProjectilePools;
 	[SerializeField] private Pool[] enemyProjectilePools;
 	[SerializeField] private Pool[] vFXPools;
+	[SerializeField] private Pool[] enemyPools;
 	private static Dictionary<GameObject, Pool> dictionary;
-	private void Start()
+	private void Awake()
 	{
 		dictionary = new Dictionary<GameObject, Pool>();
 		Initialize(playerProjectilePools);
 		Initialize(enemyProjectilePools);
 		Initialize(vFXPools);
+		Initialize(enemyPools);
 	}
 	void Initialize(Pool[] pools)
 	{
@@ -35,6 +37,7 @@ public class PoolManager : MonoBehaviour
 #if UNITY_EDITOR
 	private void OnDisable()
 	{
+		CheckPoolSize(enemyPools);
 		CheckPoolSize(playerProjectilePools);
 		CheckPoolSize(enemyProjectilePools);
 		CheckPoolSize(vFXPools);

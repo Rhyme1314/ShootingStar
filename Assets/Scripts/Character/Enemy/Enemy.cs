@@ -8,6 +8,7 @@ public class Enemy : Character
 	public override void Die()
 	{
 		PlayerEnergy.instance.Obatin(destoryEnergyBonus);
+		EnemyManager.instance.RemoveFromList(this.gameObject);
 		base.Die();
 	}
 }
